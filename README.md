@@ -5,5 +5,9 @@
 - Configure an external network card for wireless communication, to connect with your phone via an SSH tool (since nexmon-csi disables the wireless function, you will need to manually re-enable and configure it). 
 - Set up another external network card with monitoring capabilities, ensuring it is set to monitor mode and named wlan2mon before use (the name can be modified in the code).
 
-## Detection and Localization
-Run camscan.py to automatically perform suspicious device detection and localization. During detection and localization, the user needs to follow the prompts and mimic the demonstration in the demo by walking for a total of 45 seconds.
+### Detection and Localization
+Run **camscan.py** to automatically perform snooping camera detection and localization. During detection and localization, the user needs to follow the prompts and mimic the demonstration in the demo by walking for a total of 45 seconds.
+**location.py** is the localization algorithm.
+Due to the difference in the RSSI values returned by the Raspberry Pi’s network card compared to standard methods, this code includes APs with readings of -39dBm or higher (as reported by the built-in Raspberry Pi network card) in the scanning range.
+
+**Demo of CamLoPA**
