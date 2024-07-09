@@ -13,5 +13,6 @@ Run **camscan.py** to automatically perform snooping camera detection and locali
 Due to the difference in the RSSI values returned by the Raspberry Pi’s network card compared to standard methods, this code includes APs with readings of -39dBm or higher (as reported by the built-in Raspberry Pi network card) in the scanning range.
 
 **Demo of CamLoPA**
+
 Here is a demo video about CamLoPA:
 [![Introduction Video](CamLoPAdemo.mp4)
