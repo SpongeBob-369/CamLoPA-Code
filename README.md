@@ -14,5 +14,5 @@ Due to the difference in the RSSI values returned by the Raspberry Pi’s networ
 
 **Demo of CamLoPA**
 
-Here is a demo video about CamLoPA:
+Here is a demo video about CamLoPA: see CamLoPAdemo.mp4
 [![Introduction Video](CamLoPAdemo.mp4)
