@@ -18,3 +18,7 @@ Here is a demo video about CamLoPA: see CamLoPAdemo.mp4
 [![Introduction Video](CamLoPAdemo.mp4)
 
 Thanks for [nexmon_csi](https://github.com/seemoo-lab/nexmon_csi) and [CSIKit](https://github.com/Gi-z/CSIKit)
+
+**Note**
+
+The 360 camera can, in fact, be detected. In our paper, it was undetectable due to limitations of the external USB sniffer used. We recommend using the TX-N600, which is capable of capturing packets from the 360 camera. During detection, it's best to perform large-scale indoor movements to trigger traffic from the camera.
