@@ -22,3 +22,5 @@ Thanks for [nexmon_csi](https://github.com/seemoo-lab/nexmon_csi) and [CSIKit](h
 **Note**
 
 The 360 camera can, in fact, be detected. In our paper, it was undetectable due to limitations of the external USB sniffer used. We recommend using the TX-N600, which is capable of capturing packets from the 360 camera. When detecting suspicious devices, it’s best to stay indoors and perform large movements to stimulate camera traffic. For camera localization, begin with active large movements inside the room, then leave the room during the second half of the detection process.
+
+Our experiments were conducted using 2.4GHz WiFi. If using 5GHz WiFi, please adjust the relevant parameters accordingly—for example, change `'--bandwidth', '20'` to `'--bandwidth', '40'` in the location settings.
