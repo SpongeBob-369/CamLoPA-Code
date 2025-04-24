@@ -17,6 +17,7 @@ parser.add_argument("--saveplot", help="save the plot(s) (works for both file an
 parser.add_argument("--savecomplex", help="save the complex format of .dat files (works for both file and folder)", action="store_true")
 args = parser.parse_args()
 
+# 从数据包中将CSI数据提取出来
 def binary_to_complex(collector: dict):
     subcarriers_num = (len(collector[list(collector.keys())[0]]) - 18) // 4 # 18 is the number of bytes in leading information & each subcarrier has 4 bytes
 
@@ -25,6 +26,7 @@ def binary_to_complex(collector: dict):
     row = 0
     for time, packet in collector.items():
         magic_bytes = packet[0:2].hex()
+        # 计算RSSI(信号强度)
         rssi = packet[2:3].hex()
         rssi = ctypes.c_int8(int(rssi, 16)).value
         frame_control = packet[3:4].hex()
@@ -35,20 +37,24 @@ def binary_to_complex(collector: dict):
         chip_version = packet[16:18].hex()
         csi = packet[18:]
         complex_csi[row] = np.array([complex(int.from_bytes(csi[start:start+2], 'little', signed=True), int.from_bytes(csi[start+2:start+4], 'little', signed=True)) for start in range(0, 1024, 4)], dtype=complex)
+
+        # 构建RSS数据
         RSS[row] = rssi
         row += 1
         
     time_stamp_ns = np.array(list(collector.keys()))
     time_stamp_ns = time_stamp_ns - time_stamp_ns[0]
-    
+    # 返回时间戳、复数 CSI 数据和 RSS 数据
     return (time_stamp_ns, complex_csi, RSS)
-    
-        
+
+
+# 将复数 CSI 数据和时间戳转换为 pandas DataFrame，生成.csv文件
 def sve_complex_to_csv(filename: str, time_stamp_ns: np.ndarray, complex_csi: np.ndarray):
     df = pd.DataFrame(data=complex_csi, index=time_stamp_ns, columns=np.arange(1, 257, 1))
     df.to_csv(os.path.splitext(filename)[0]+'.csv')  
 
 
+# 绘图，将CSI信号绘制成一个波形图
 def plot_complex_csi(ax, time_stamp_ns: np.ndarray, complex_csi: np.ndarray, max=3000, title='CSI'):
     amp = abs(complex_csi)
     num_of_subcarriers = amp.shape[1]
@@ -67,6 +73,7 @@ def plot_complex_csi(ax, time_stamp_ns: np.ndarray, complex_csi: np.ndarray, max
     ax.set_ylabel("subcarrier", fontsize=12, fontweight='regular')
 
 
+# 处理.dat文件中的数据
 def process_file(file: str, savecomplex: bool, plot:bool, saveplot: bool):
     pickle_in = open(file, "rb")
     collectors = pickle.load(pickle_in)
